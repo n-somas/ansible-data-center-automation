@@ -1,0 +1,10 @@
+---
+- name: Lokale Ansible-Umgebung testen
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Testmeldung ausgeben
+      ansible.builtin.debug:
+        msg: "Ansible funktioniert erfolgreich."
+
