@@ -1,0 +1,12 @@
+---
+- name: Administrationswerkzeuge installieren
+  hosts: datacenter
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: Htop installieren
+      ansible.builtin.apt:
+        name: htop
+        state: present
+        update_cache: true
