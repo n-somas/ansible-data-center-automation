@@ -1,0 +1,17 @@
+---
+- name: Serverinformationen erfassen
+  hosts: datacenter
+  gather_facts: true
+
+  tasks:
+    - name: Betriebssystem anzeigen
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_version'] }}"
+
+    - name: Hostname anzeigen
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts['hostname'] }}"
+
+    - name: Arbeitsspeicher anzeigen
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts['memtotal_mb'] }} MB"
