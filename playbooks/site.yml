@@ -1,0 +1,7 @@
+---
+- name: Server-Basiskonfiguration anwenden
+  hosts: datacenter
+  gather_facts: false
+
+  roles:
+    - common
