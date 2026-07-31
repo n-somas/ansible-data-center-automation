@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Ansible Data Center Automation Lab</title>
+</head>
+<body>
+    <h1>Server erfolgreich automatisiert</h1>
+    <p><strong>Hostname:</strong> {{ ansible_facts['hostname'] }}</p>
+    <p><strong>Betriebssystem:</strong> {{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_version'] }}</p>
+    <p><strong>Verwaltung:</strong> Ansible</p>
+</body>
+</html>

@@ -1,7 +1,8 @@
 ---
 - name: Server-Basiskonfiguration anwenden
   hosts: datacenter
-  gather_facts: false
+  gather_facts: true
 
   roles:
     - common
+    - webserver

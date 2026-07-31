@@ -1,0 +1,24 @@
+---
+- name: Nginx installieren
+  ansible.builtin.apt:
+    name: nginx
+    state: present
+    update_cache: true
+  become: true
+
+- name: Statusseite bereitstellen
+  ansible.builtin.template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+  notify: Nginx neu laden
+
+- name: Nginx starten und aktivieren
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: true
+  become: true
