@@ -1,0 +1,22 @@
+---
+- name: Festplattenauslastung erfassen
+  ansible.builtin.command:
+    cmd: df -P /
+  register: disk_usage
+  changed_when: false
+
+- name: Arbeitsspeicherauslastung erfassen
+  ansible.builtin.command:
+    cmd: free -m
+  register: memory_usage
+  changed_when: false
+
+- name: Serviceinformationen erfassen
+  ansible.builtin.service_facts:
+
+- name: Health-Check-Ergebnis anzeigen
+  ansible.builtin.debug:
+    msg:
+      - "Festplatte: {{ disk_usage.stdout_lines[-1] }}"
+      - "Arbeitsspeicher: {{ memory_usage.stdout_lines[1] }}"
+      - "Nginx-Status: {{ ansible_facts.services['nginx.service'].state | default('unknown') }}"

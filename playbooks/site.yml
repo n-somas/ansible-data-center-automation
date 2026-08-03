@@ -6,3 +6,4 @@
   roles:
     - common
     - webserver
+    - health_check
