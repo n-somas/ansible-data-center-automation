@@ -1,4 +1,12 @@
 ---
+- name: Lokales Report-Verzeichnis sicherstellen
+  ansible.builtin.file:
+    path: "{{ playbook_dir }}/../reports"
+    state: directory
+    mode: "0755"
+  delegate_to: localhost
+  run_once: true
+
 - name: Festplattenauslastung erfassen
   ansible.builtin.command:
     cmd: df -P /
@@ -13,6 +21,22 @@
 
 - name: Serviceinformationen erfassen
   ansible.builtin.service_facts:
+
+- name: Health-Check als JSON lokal speichern
+  ansible.builtin.copy:
+    dest: "{{ playbook_dir }}/../reports/{{ inventory_hostname }}.json"
+    mode: "0644"
+    content: |
+      {
+        "hostname": "{{ ansible_facts['hostname'] }}",
+        "operating_system": "{{ ansible_facts['distribution'] }}",
+        "operating_system_version": "{{ ansible_facts['distribution_version'] }}",
+        "memory_mb": {{ ansible_facts['memtotal_mb'] }},
+        "disk_output": {{ disk_usage.stdout | to_json }},
+        "memory_output": {{ memory_usage.stdout | to_json }},
+        "nginx_status": "{{ ansible_facts.services['nginx.service'].state | default('unknown') }}"
+      }
+  delegate_to: localhost
 
 - name: Health-Check-Ergebnis anzeigen
   ansible.builtin.debug:

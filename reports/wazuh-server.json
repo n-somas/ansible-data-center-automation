@@ -1,0 +1,9 @@
+{
+  "hostname": "wazuh-server",
+  "operating_system": "Ubuntu",
+  "operating_system_version": "24.04",
+  "memory_mb": 3915,
+  "disk_output": "Filesystem                        1024-blocks     Used Available Capacity Mounted on\n/dev/mapper/ubuntu--vg-ubuntu--lv    19430032 10400940   8016768      57% /",
+  "memory_output": "               total        used        free      shared  buff/cache   available\nMem:            3915        3134         264           1         778         781\nSwap:           3914          51        3863",
+  "nginx_status": "running"
+}
