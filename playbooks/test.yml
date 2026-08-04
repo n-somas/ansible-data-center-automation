@@ -7,4 +7,3 @@
     - name: Testmeldung ausgeben
       ansible.builtin.debug:
         msg: "Ansible funktioniert erfolgreich."
-

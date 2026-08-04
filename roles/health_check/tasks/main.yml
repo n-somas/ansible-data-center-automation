@@ -10,13 +10,13 @@
 - name: Festplattenauslastung erfassen
   ansible.builtin.command:
     cmd: df -P /
-  register: disk_usage
+  register: health_check_disk_usage
   changed_when: false
 
 - name: Arbeitsspeicherauslastung erfassen
   ansible.builtin.command:
     cmd: free -m
-  register: memory_usage
+  register: health_check_memory_usage
   changed_when: false
 
 - name: Serviceinformationen erfassen
@@ -32,8 +32,8 @@
         "operating_system": "{{ ansible_facts['distribution'] }}",
         "operating_system_version": "{{ ansible_facts['distribution_version'] }}",
         "memory_mb": {{ ansible_facts['memtotal_mb'] }},
-        "disk_output": {{ disk_usage.stdout | to_json }},
-        "memory_output": {{ memory_usage.stdout | to_json }},
+        "disk_output": {{ health_check_disk_usage.stdout | to_json }},
+        "memory_output": {{ health_check_memory_usage.stdout | to_json }},
         "nginx_status": "{{ ansible_facts.services['nginx.service'].state | default('unknown') }}"
       }
   delegate_to: localhost
@@ -41,6 +41,6 @@
 - name: Health-Check-Ergebnis anzeigen
   ansible.builtin.debug:
     msg:
-      - "Festplatte: {{ disk_usage.stdout_lines[-1] }}"
-      - "Arbeitsspeicher: {{ memory_usage.stdout_lines[1] }}"
+      - "Festplatte: {{ health_check_disk_usage.stdout_lines[-1] }}"
+      - "Arbeitsspeicher: {{ health_check_memory_usage.stdout_lines[1] }}"
       - "Nginx-Status: {{ ansible_facts.services['nginx.service'].state | default('unknown') }}"
